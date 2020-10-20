@@ -14,9 +14,10 @@ VOLUME /gitit/users
 ADD --chown=gitit:gitit static /gitit/static/
 ADD --chown=gitit:gitit templates /gitit/templates/
 COPY --chown=gitit:gitit gitit.conf /gitit/
+COPY --chown=gitit:gitit secret.conf /gitit/
 
 WORKDIR /gitit/
 
-ENTRYPOINT ["gitit", "-f", "gitit.conf"]
+ENTRYPOINT ["gitit", "-f", "gitit.conf", "-f", "secret.conf"]
 
 CMD []

@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  gitit:
+    build: .
+    image: gitit:latest
+    container_name: gitit
+    ports:
+      - 8000:8000
+    volumes:
+      - type: bind
+        source: ./users
+        target: /gitit/users
+      - type: bind
+        source: ./wikidata
+        target: /gitit/wikidata
+      - type: bind
+        source: ./logs
+        target: /gitit/logs
+    restart: always

@@ -1,4 +1,5 @@
 wikidata/
 logs/
 users/
+ssh/
 secret.conf

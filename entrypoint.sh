@@ -1,6 +1,9 @@
 #!/bin/sh
 
-set -eou pipefail
+set -eu
+
+WORKDIR="/gitit"
+cd $WORKDIR
 
 # ensure hook
 HOOKS="wikidata/.git/hooks"
@@ -9,7 +12,9 @@ if [ ! -f "$HOOKS/post-commit" ]; then
 fi
 
 # downsync
-cd wikidata && git pull && cd ..
+cd wikidata
+ssh-agent git pull >> "$WORKDIR/logs/git.log" 2>&1
+cd "$WORKDIR"
 
 # serve
 gitit -f gitit.conf -f secret.conf

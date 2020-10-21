@@ -3,9 +3,16 @@ FROM debian:sid-20201012
 RUN apt-get update && \
     apt-get install -y gitit
 
-ADD ssh/id_rsa ssh/id_rsa.pub .ssh/
+# Authorize SSH Host
+RUN mkdir -p /root/.ssh && \
+    chmod 0700 /root/.ssh && \
+    ssh-agent ssh-keyscan github.com > /root/.ssh/known_hosts
 
-RUN ["ssh-add", ".ssh/id_rsa"]
+# Add the keys and set permissions
+ADD ssh/id_rsa ssh/id_rsa.pub /root/.ssh/
+RUN chmod 600 /root/.ssh/id_rsa && \
+    chmod 600 /root/.ssh/id_rsa.pub && \
+    ssh-agent ssh-add /root/.ssh/id_rsa
 
 VOLUME /gitit/wikidata
 VOLUME /gitit/logs

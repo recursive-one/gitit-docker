@@ -1,5 +1,26 @@
 #!/bin/sh
 
-set -eu
+export LOG="/gitit/logs/git.log"
 
-ssh-agent git push origin master >> "/gitit/logs/git.log" 2>&1
+die () {
+    echo "$1" 
+    exit 1
+}
+
+echo "----------" >> $LOG
+date >> $LOG
+
+eval $(ssh-agent) >> $LOG 2>&1 || die "SSH agent failed"
+
+git fetch origin master >> $LOG 2>&1 || die "Fetch failed" 
+
+git merge --no-ff --no-edit origin master >> $LOG 2>&1
+if git status | grep -q "Unmerged"
+then
+    echo "commiting"
+    git commit -a -m "auto-merge" >> $LOG 2>&1 || die "Auto-merge commit failed"
+else
+    exit 2
+fi
+
+git push origin master >> $LOG 2>&1 || die "Push failed"

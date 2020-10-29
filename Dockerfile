@@ -28,6 +28,8 @@ COPY gitit.conf \
 
 WORKDIR /gitit/
 
+EXPOSE 8000/tcp
+
 ENTRYPOINT ["./entrypoint.sh"]
 
 CMD []

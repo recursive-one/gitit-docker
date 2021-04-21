@@ -1,4 +1,4 @@
-# Gitit dor [wiki.recursive.one](https://wiki.recursive.one).
+# Gitit for [wiki.recursive.one](https://wiki.recursive.one).
 
 1. Clone a wiki repo to the `wikidata` subdir.
 2. Put the SSH keys (`id_rsa` and `id_rsa.pub`, for autopush) into `ssh`).
